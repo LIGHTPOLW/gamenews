@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Game News</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7f9;--sf:#fff;--ink:#15171c;--mu:#646b78;--ln:#e3e5ea;--ac:#2d4fe0;--tl:90%;--tt:26%;
+--hd:'Bricolage Grotesque',system-ui,sans-serif;--bd:'Instrument Sans',system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--sf:#171a20;--ink:#eceef2;--mu:#99a0ad;--ln:#272b33;--ac:#8aa2ff;--tl:22%;--tt:82%}}
+:root[data-theme="dark"]{--bg:#101216;--sf:#171a20;--ink:#eceef2;--mu:#99a0ad;--ln:#272b33;--ac:#8aa2ff;--tl:22%;--tt:82%}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--bd)}
+a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+h1,h2,h3{font-family:var(--hd);line-height:1.15;margin:0;font-weight:700}
+ul{list-style:none;margin:0;padding:0}
+.w{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--ln)}
+.top{display:flex;align-items:center;gap:28px;height:60px}
+.logo{font:700 20px var(--hd);letter-spacing:-.02em}
+.logo span{color:var(--ac)}
+nav{flex:1}nav>ul{display:flex;gap:4px}
+nav li{position:relative}
+nav>ul>li>a{display:block;padding:8px 12px;border-radius:6px;color:var(--mu);font-weight:500}
+nav>ul>li>a:hover,nav a[aria-current]{color:var(--ink)}
+nav a[aria-current]{box-shadow:inset 0 -2px var(--ink)}
+.dd{display:none;position:absolute;left:0;top:100%;min-width:190px;background:var(--sf);border:1px solid var(--ln);border-radius:8px;padding:6px}
+li:hover>.dd,li:focus-within>.dd{display:block}
+.dd a{display:block;padding:7px 10px;border-radius:5px;color:var(--mu);font-size:14px}.dd a:hover{background:var(--bg);color:var(--ink)}
+.tools{display:flex;gap:8px;align-items:center}
+.ib,.btn{font:500 14px var(--bd);border:1px solid var(--ln);background:var(--sf);color:var(--ink);border-radius:6px;padding:7px 12px;cursor:pointer}
+.btn.p{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#sf{display:none;padding:10px 0 14px}#sf.on{display:block}
+#sf input{width:100%;font:16px var(--bd);padding:10px 12px;border:1px solid var(--ln);border-radius:6px;background:var(--sf);color:var(--ink)}
+.tr{border-top:1px solid var(--ln);overflow-x:auto;white-space:nowrap}
+.tr .w{display:flex;gap:22px;height:40px;align-items:center;font-size:14px;color:var(--mu)}
+.tr a[aria-current]{color:var(--ink);box-shadow:0 2px var(--ac)}.tr a:hover{color:var(--ink)}
+.tr b{color:var(--ink);font-weight:500}
+main{padding:36px 0 64px;min-height:70vh}
+.ph{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.ph h1{font-size:clamp(32px,5vw,48px);letter-spacing:-.02em}.ph p{margin:6px 0 0;color:var(--mu)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.chip{padding:6px 14px;border:1px solid var(--ln);border-radius:99px;font-size:14px;color:var(--mu);background:var(--sf);cursor:pointer;font-family:var(--bd)}
+.chip[aria-current],.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.g2{display:grid;grid-template-columns:1.5fr 1fr;gap:40px}
+.th{position:relative;aspect-ratio:4/3;background:hsl(var(--h) 28% var(--tl));color:hsl(var(--h) 38% var(--tt));border-radius:6px;display:flex;align-items:flex-end;padding:10px;overflow:hidden}
+.th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.th i,.dc{z-index:1}
+.th b{font:700 15px/1.1 var(--hd)}.th i{position:absolute;top:8px;right:10px;font:700 18px var(--hd);font-style:normal}
+.big{aspect-ratio:16/9;padding:24px}.big b{font-size:clamp(28px,5vw,52px);letter-spacing:-.02em}.big i{font-size:34px;top:20px;right:24px}
+small,.m{color:var(--mu);font-size:13px}
+.lead h2{font-size:clamp(24px,3.4vw,34px);margin:16px 0 8px;letter-spacing:-.01em}.lead p{color:var(--mu);margin:0 0 8px;max-width:60ch}
+.row{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--ln);align-items:start}
+.row:first-child{border-top:0;padding-top:0}.row h3{font-size:17px;margin:2px 0 4px}.row:hover h3,.lead:hover h2{text-decoration:underline;text-underline-offset:3px}
+.sec{margin-top:56px}.sec>h2{font-size:24px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:baseline}
+.sec>h2 a{font:500 14px var(--bd);color:var(--ac)}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:8px}
+.cols h3{font-size:18px;margin-bottom:12px}
+.art{max-width:680px}.art h1{font-size:clamp(30px,5vw,44px);letter-spacing:-.02em;margin:10px 0 12px}
+.art .th{margin:24px 0}.art p{font-size:18px;line-height:1.7;margin:0 0 18px}
+.crumb{font-size:14px;color:var(--mu)}.crumb a:hover{color:var(--ink);text-decoration:underline}
+.og{display:grid;grid-template-columns:200px 1fr;gap:40px}
+.og label{display:block;font-size:14px;color:var(--mu);margin:18px 0 6px}.og select,.og input[type=range]{width:100%}
+.og select{padding:8px;border:1px solid var(--ln);border-radius:6px;background:var(--sf);color:var(--ink);font:14px var(--bd)}
+.gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:20px}
+.gr .th{aspect-ratio:3/4}.gr h3{font-size:15px;margin:10px 0 2px}.gr .pc{display:flex;gap:8px;align-items:baseline}
+.gr s{color:var(--mu);font-size:13px}.gr strong{font-weight:500}.dc{position:absolute;top:8px;left:8px;background:var(--ink);color:var(--bg);font:500 12px var(--bd);padding:2px 7px;border-radius:4px}
+.box{max-width:400px}.box input{display:block;width:100%;margin:6px 0 14px;padding:10px 12px;border:1px solid var(--ln);border-radius:6px;background:var(--sf);color:var(--ink);font:16px var(--bd)}
+.box label{font-size:14px;color:var(--mu)}.note{color:var(--mu);font-size:14px;margin-top:14px}
+footer{border-top:1px solid var(--ln);padding:28px 0 40px;color:var(--mu);font-size:14px}
+footer .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}footer nav ul{display:flex;gap:16px;flex-wrap:wrap}footer a:hover{color:var(--ink)}
+@media(max-width:820px){.g2,.cols,.og{grid-template-columns:1fr;gap:28px}.top{gap:12px}.dd{display:none!important}
+nav{overflow-x:auto;white-space:nowrap}.tools .btn.p{display:none}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+ <div class="w top">
+  <a class="logo" href="#/">Game<span>News</span></a>
+  <nav aria-label="Principal"><ul id="nav"></ul></nav>
+  <div class="tools">
+   <button class="ib" id="sb" aria-label="Buscar">Buscar</button>
+   <button class="ib" id="tb" aria-label="Cambiar tema">Tema</button>
+   <a class="btn p" href="#/cuenta">Iniciar sesión</a>
+  </div>
+ </div>
+ <div class="w" id="sf"><input id="q" type="search" placeholder="Busca juegos, consolas o noticias y pulsa Enter" aria-label="Buscar"></div>
+ <div class="tr"><div class="w" id="trn"></div></div>
+</header>
+<main id="m" tabindex="-1"><div class="w" id="v"></div></main>
+<footer><div class="w"><span>© 2026 Game News. Contenido de ejemplo.</span><nav aria-label="Pie"><ul id="fn"></ul></nav></div></footer>
+
+<script>
+const S={
+ noticias:{n:'Noticias',d:'Lo último del mundo gamer, en un solo lugar.',k:'Lo que sabemos hasta ahora y qué puede cambiar en las próximas semanas.',subs:['PlayStation','Xbox','Nintendo','PC']},
+ resenas:{n:'Reseñas',d:'Análisis honestos para que elijas mejor.',k:'Probamos el juego a fondo y te contamos qué funciona y qué no.',subs:['Acción','RPG','Aventura']},
+ guias:{n:'Guías',d:'Tutoriales y consejos para sacarle más provecho a tus juegos.',k:'Pasos claros para avanzar sin perder tiempo.',subs:['Principiantes','Builds','Trucos']},
+ traileres:{n:'Tráileres',d:'Los últimos avances de los juegos más esperados.',k:'Lo que muestra el avance y lo que deja entrever.',subs:['Anuncios','Lanzamientos']},
+ esports:{n:'Esports',d:'Torneos, equipos y resultados del circuito competitivo.',k:'Resultados, calendario y claves para seguir la competencia.',subs:['League of Legends','Valorant','CS2','Dota 2']},
+ mas:{n:'Más',d:'Listas, hardware y opinión para ir más allá de la noticia.',k:'Contexto y análisis para entender el panorama completo.',subs:['Listas','Hardware','Opinión']}};
+const T={
+ gta6:['GTA 6','Todo lo publicado sobre el próximo juego de Rockstar.'],
+ wukong:['Black Myth: Wukong','Análisis, builds y novedades del action RPG.'],
+ ps5pro:['PlayStation 5 Pro','Rendimiento, configuración y juegos compatibles.'],
+ xbox:['Xbox Series X|S','Game Pass, rendimiento y próximos lanzamientos.'],
+ switch2:['Nintendo Switch 2','Detalles de la consola y juegos confirmados.'],
+ esperados:['Más esperados','Los lanzamientos que más expectativa generan.']};
+const A=[
+['noticias','PlayStation','ps5pro','PlayStation 5 Pro: ¿vale la pena hoy?',0,4],
+['noticias','Nintendo','switch2','Nintendo Switch 2: nuevos detalles sobre sus funciones',0,3],
+['noticias','PlayStation','gta6','Rockstar confirma novedades de GTA 6',0,3],
+['noticias','Xbox','xbox','Game Pass: los juegos que llegan este mes',1,2],
+['noticias','PC','wukong','Black Myth: Wukong recibe su primer DLC',1,3],
+['noticias','PC','esperados','Posibles retrasos en los lanzamientos más esperados',2,4],
+['noticias','Nintendo','','Nintendo Direct: todo lo que se anunció',3,5],
+['noticias','PlayStation','','Ghost of Yōtei: se filtra nuevo gameplay',3,3],
+['resenas','RPG','wukong','Black Myth: Wukong, análisis',5,8,'9.5'],
+['resenas','Acción','','Star Wars Outlaws, reseña',6,6,'8.0'],
+['resenas','RPG','','Elden Ring: Shadow of the Erdtree, reseña',7,7,'9.0'],
+['resenas','Aventura','','The Legend of Zelda: Echoes of Wisdom, reseña',8,5,'8.5'],
+['guias','Principiantes','','Cómo conseguir Protogemas rápido en Genshin Impact',4,6],
+['guias','Builds','','Elden Ring: build de Fuerza + Fe para PvE',6,7],
+['guias','Trucos','','Mejora rápido en Fortnite: trucos y consejos',8,5],
+['guias','Principiantes','ps5pro','Configuración óptima de tu PS5 Pro',9,4],
+['guias','Builds','wukong','Black Myth: Wukong, mejores builds y equipo',9,6],
+['guias','Principiantes','gta6','Qué hacer antes del lanzamiento de GTA 6',10,5],
+['guias','Trucos','xbox','Cómo mejorar el rendimiento en Xbox Series X|S',10,4],
+['guias','Principiantes','switch2','Cómo transferir tus datos a Switch 2',11,3],
+['traileres','Anuncios','gta6','Tráiler oficial de GTA 6',12,2],
+['traileres','Lanzamientos','wukong','Nuevo tráiler de Black Myth: Wukong',13,2],
+['traileres','Lanzamientos','','Shadow of the Erdtree: tráiler de lanzamiento',14,2],
+['traileres','Anuncios','','Marvel’s Spider-Man 2: tráiler de historia',15,2],
+['esports','League of Legends','','Worlds: todo lo que debes saber del campeonato',2,5],
+['esports','CS2','','IEM Cologne: resultados y mejores jugadas',4,3],
+['esports','Valorant','','VCT Americas: así van los playoffs',5,4],
+['esports','Dota 2','','The International: equipos clasificados',6,3],
+['mas','Listas','esperados','Los 10 juegos más esperados del año',3,6],
+['mas','Hardware','ps5pro','Comparativa: PS5 contra PS5 Pro',5,6],
+['mas','Hardware','gta6','¿Qué PC necesitas para jugar GTA 6?',6,4],
+['mas','Opinión','','Por qué los juegos de un solo jugador siguen vivos',7,5],
+['mas','Listas','xbox','Los mejores juegos de Xbox Series X|S',2,5],
+['mas','Listas','switch2','Juegos confirmados para Switch 2',4,4],
+['mas','Listas','esperados','Qué esperar de cada juego',5,5]
+].map((a,i)=>({i,s:a[0],sub:a[1],t:a[2],h:a[3],d:a[4],m:a[5],r:a[6]}));
+const O=[['Grand Theft Auto V','ps xbox pc',1499,67],['Red Dead Redemption 2','ps xbox pc',1399,60],['Cyberpunk 2077','ps xbox pc',1199,50],['Elden Ring','ps xbox pc',1199,40],['The Witcher 3','ps xbox pc switch',499,70],['Hogwarts Legacy','ps xbox pc switch',1199,60],['Resident Evil 4','ps xbox pc',999,55],['Forza Horizon 5','xbox pc',1299,45],['Marvel’s Spider-Man 2','ps',1399,40],['Star Wars Jedi: Survivor','ps xbox pc',1199,50]];
+const PL={all:'Todos',ps:'PlayStation',xbox:'Xbox',switch:'Switch',pc:'PC'};
+const $=s=>document.querySelector(s),sl=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-');
+const hue=s=>[...s].reduce((a,c)=>a+c.charCodeAt(0)*37,0)%360;
+const ago=d=>d?d==1?'Ayer':`Hace ${d} días`:'Hoy';
+/* ============ IMÁGENES DE ARTÍCULOS ============
+   Formato:  número_del_artículo: 'ruta/o/data-uri'
+   El número es la posición en la lista A (empieza en 0).
+   Ejemplos (quita las // para activarlos):
+   0:  PlayStation 5 Pro: ¿vale la pena hoy?
+   1:  Nintendo Switch 2: nuevos detalles
+   2:  Rockstar confirma novedades de GTA 6
+   20: Tráiler oficial de GTA 6
+*/
+const IMG={
+ 0:'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=85',
+ 1:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=85',
+ 2:'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
+ 3:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
+ 4:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
+ 5:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
+ 6:'https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85',
+ 7:'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=1200&q=85',
+ 8:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
+ 9:'https://cdn.cloudflare.steamstatic.com/steam/apps/2842040/header.jpg',
+ 10:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
+ 11:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=85',
+ 12:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
+ 13:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
+ 14:'https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/header.jpg',
+ 15:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
+ 16:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
+ 17:'https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg',
+ 18:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
+ 19:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=85',
+ 20:'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
+ 21:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
+ 22:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
+ 23:'https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/header.jpg',
+ 24:'https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85',
+ 25:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
+ 26:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
+ 27:'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=85',
+ 28:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
+ 29:'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
+ 30:'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=85',
+ 31:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
+ 32:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
+ 33:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
+ 34:'https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85',
+};
+/* ============ IMÁGENES DE OFERTAS ============
+   Formato:  'Nombre exacto del juego': 'ruta/imagen.jpg'
+*/
+const IMGO={
+ 'Grand Theft Auto V':'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
+ 'Red Dead Redemption 2':'https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg',
+ 'Cyberpunk 2077':'https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg',
+ 'Elden Ring':'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
+ 'The Witcher 3':'https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg',
+ 'Hogwarts Legacy':'https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg',
+ 'Resident Evil 4':'https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg',
+ 'Forza Horizon 5':'https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg',
+ 'Marvel’s Spider-Man 2':'https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/header.jpg',
+ 'Star Wars Jedi: Survivor':'https://cdn.cloudflare.steamstatic.com/steam/apps/1774580/header.jpg',
+};
+const th=(a,big)=>{const s=IMG[a.i];return `<div class="th${big?' big':''}" style="--h:${hue(a.sub||a)}">${s?`<img src="${s}" alt="${a.h}" loading="lazy">`:`<b>${a.sub||a}</b>`}${a.r?`<i>${a.r}</i>`:''}</div>`};
+const meta=a=>`${ago(a.d)}, ${a.m} min de lectura`;
+const row=a=>`<a class="row" href="#/articulo/${a.i}">${th(a)}<div><small>${S[a.s].n}</small><h3>${a.h}</h3><span class="m">${meta(a)}</span></div></a>`;
+const lead=a=>`<a class="lead" href="#/articulo/${a.i}" style="display:block">${th(a,1)}<h2>${a.h}</h2><p>${S[a.s].k}</p><span class="m">${S[a.s].n}, ${meta(a)}</span></a>`;
+const list=(arr,empty)=>arr.length?`<div class="g2"><div>${lead(arr[0])}</div><div>${arr.slice(1,6).map(row).join('')||''}</div></div>`+(arr.length>6?`<div style="margin-top:40px">${arr.slice(6).map(row).join('')}</div>`:''):`<p>${empty||'No hay artículos todavía.'}</p>`;
+const head=(t,p,r)=>`<div class="ph"><div><h1>${t}</h1><p>${p}</p></div>${r||''}</div>`;
+const by=f=>A.filter(f).sort((a,b)=>a.d-b.d);
+
+function home(){
+ const n=by(a=>a.s=='noticias');
+ return `<div class="g2"><div>${lead(n[0])}</div><div>${n.slice(1,5).map(row).join('')}</div></div>
+ <section class="sec"><h2>Últimas noticias <a href="#/noticias">Ver todas</a></h2>${n.slice(5).map(row).join('')}</section>
+ <section class="sec"><div class="cols">${['resenas','guias','esports'].map(k=>`<div><h3><a href="#/${k}">${S[k].n}</a></h3>${by(a=>a.s==k).slice(0,3).map(row).join('')}</div>`).join('')}</div></section>`}
+function section(k,sub){
+ const s=S[k],id=sub&&s.subs.find(x=>sl(x)==sub);if(sub&&!id)return nf();
+ const chips=`<div class="chips"><a class="chip" href="#/${k}" ${!id?'aria-current="page"':''}>Todo</a>${s.subs.map(x=>`<a class="chip" href="#/${k}/${sl(x)}" ${x==id?'aria-current="page"':''}>${x}</a>`).join('')}</div>`;
+ return head(id||s.n,id?`${s.n}: ${id}`:s.d)+chips+list(by(a=>a.s==k&&(!id||a.sub==id)),'Aún no publicamos artículos en esta categoría.')}
+function topic(k){const t=T[k];if(!t)return nf();
+ return head(t[0],t[1])+list(by(a=>a.t==k))}
+function art(i){const a=A[i];if(!a)return nf();
+ const rel=by(x=>x.i!=a.i&&(x.s==a.s||(a.t&&x.t==a.t))).slice(0,4);
+ return `<article class="art"><div class="crumb"><a href="#/">Inicio</a> / <a href="#/${a.s}">${S[a.s].n}</a> / <a href="#/${a.s}/${sl(a.sub)}">${a.sub}</a></div>
+ <h1>${a.h}</h1><span class="m">${meta(a)}, Redacción Game News</span>${th(a,1)}
+ <p><strong>${S[a.s].k}</strong></p>
+ <p>Este es un texto de ejemplo para mostrar cómo se vería la página de un artículo. Aquí irá el cuerpo completo de la nota, con párrafos cortos y una lectura cómoda en cualquier pantalla.</p>
+ <p>Cuando conectes tu contenido real, cada artículo conservará esta misma estructura: ruta de navegación, titular, datos de publicación y, al final, notas relacionadas.</p>
+ ${a.t?`<p><a class="chip" href="#/tema/${a.t}">Más sobre ${T[a.t][0]}</a></p>`:''}</article>
+ <section class="sec"><h2>Relacionadas</h2>${rel.map(row).join('')}</section>`}
+let pf='all',mx=1500,so='d';
+function ofertas(){return head('Ofertas en juegos','Descuentos en juegos de todas las plataformas.')+`<div class="og"><aside>
+ <div class="chips" style="margin:0;flex-direction:column;align-items:flex-start">${Object.keys(PL).map(k=>`<button class="chip${k==pf?' on':''}" data-p="${k}">${PL[k]}</button>`).join('')}</div>
+ <label for="mx">Precio máximo: $<span id="mv">${mx}</span></label><input id="mx" type="range" min="300" max="1500" step="100" value="${mx}">
+ <label for="so">Ordenar por</label><select id="so"><option value="d">Mayor descuento</option><option value="p">Menor precio</option></select></aside>
+ <div><div class="gr" id="gr"></div></div></div>`}
+function grid(){
+ const r=O.map(o=>({n:o[0],p:o[1],o:o[2],d:o[3],f:Math.round(o[2]*(100-o[3])/100)})).filter(o=>(pf=='all'||o.p.includes(pf))&&o.f<=mx).sort((a,b)=>so=='d'?b.d-a.d:a.f-b.f);
+ $('#gr').innerHTML=r.map(o=>`<div><div class="th" style="--h:${hue(o.n)}"><span class="dc">-${o.d}%</span>${IMGO[o.n]?`<img src="${IMGO[o.n]}" alt="${o.n}" loading="lazy">`:`<b>${o.n}</b>`}</div><h3>${o.n}</h3><small>${o.p.split(' ').map(x=>PL[x]).join(', ')}</small><div class="pc"><strong>$${o.f}</strong><s>$${o.o}</s></div></div>`).join('')||'<p>Ninguna oferta coincide. Sube el precio máximo o elige otra plataforma.</p>'}
+function bind(){
+ document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{pf=b.dataset.p;route()});
+ const x=$('#mx');if(x){x.oninput=()=>{mx=+x.value;$('#mv').textContent=mx;grid()};$('#so').value=so;$('#so').onchange=e=>{so=e.target.value;grid()};grid()}
+ const f=$('#cf');if(f)f.onsubmit=e=>{e.preventDefault();$('#cm').textContent='Esta es una demo: aún no hay servidor de cuentas conectado.'}}
+function search(q){q=decodeURIComponent(q||'').trim();const r=q?A.filter(a=>(a.h+a.sub+S[a.s].n).toLowerCase().includes(q.toLowerCase())):[];
+ return head('Resultados para “'+q.replace(/</g,'&lt;')+'”',r.length+' artículos encontrados')+(r.length?r.map(row).join(''):'<p>Prueba con otro término, por ejemplo el nombre de un juego o una consola.</p>')}
+const acct=m=>head(m?'Crea tu cuenta':'Inicia sesión',m?'Guarda artículos y recibe avisos de tus juegos.':'Accede para guardar tus artículos.')+
+ `<div class="chips"><a class="chip" href="#/cuenta" ${m?'':'aria-current="page"'}>Iniciar sesión</a><a class="chip" href="#/cuenta/registro" ${m?'aria-current="page"':''}>Registrarme</a></div>
+ <form class="box" id="cf">${m?'<label for="u">Nombre</label><input id="u" required>':''}<label for="e">Correo</label><input id="e" type="email" required><label for="p">Contraseña</label><input id="p" type="password" required>
+ <button class="btn p" type="submit">${m?'Crear cuenta':'Entrar'}</button><p class="note" id="cm"></p></form>`;
+const about=()=>head('Acerca de Game News','Noticias, reseñas y guías de videojuegos, escritas con claridad.')+`<div class="art"><p>Cubrimos consolas, PC y esports. Si tienes una pista o quieres colaborar, escríbenos a redaccion@gamenews.example.</p></div>`;
+const nf=()=>head('Página no encontrada','Esta dirección no existe o cambió.')+'<a class="btn p" href="#/">Volver al inicio</a>';
+
+function route(){
+ const p=location.hash.replace(/^#\/?/,'').split('/'),k=p[0];let h;
+ if(!k)h=home();else if(S[k])h=section(k,p[1]);else if(k=='tema')h=topic(p[1]);else if(k=='articulo')h=art(+p[1]);
+ else if(k=='ofertas')h=ofertas();else if(k=='buscar')h=search(p[1]);else if(k=='cuenta')h=acct(p[1]=='registro');else if(k=='acerca')h=about();else h=nf();
+ $('#v').innerHTML=h;bind();
+ const cur=(k=='articulo'&&A[+p[1]])?A[+p[1]].s:k,tp=k=='tema'?p[1]:k=='ofertas'?'ofertas':'';
+ document.querySelectorAll('#nav>li>a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.k==cur));
+ document.querySelectorAll('#trn a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.k==tp));
+ document.title=(k&&S[k]?S[k].n+' | ':'')+'Game News';
+}
+$('#nav').innerHTML=Object.keys(S).map(k=>`<li><a href="#/${k}" data-k="${k}">${S[k].n}</a><ul class="dd">${S[k].subs.map(x=>`<li><a href="#/${k}/${sl(x)}">${x}</a></li>`).join('')}</ul></li>`).join('');
+$('#trn').innerHTML='<b>Tendencias</b>'+Object.keys(T).map(k=>`<a href="#/tema/${k}" data-k="${k}">${T[k][0]}</a>`).join('')+'<a href="#/ofertas" data-k="ofertas">Ofertas en juegos</a>';
+$('#fn').innerHTML=Object.keys(S).map(k=>`<li><a href="#/${k}">${S[k].n}</a></li>`).join('')+'<li><a href="#/ofertas">Ofertas</a></li><li><a href="#/acerca">Acerca de</a></li>';
+$('#sb').onclick=()=>{$('#sf').classList.toggle('on');$('#q').focus()};
+$('#q').onkeydown=e=>{if(e.key=='Enter'&&e.target.value.trim()){location.hash='#/buscar/'+encodeURIComponent(e.target.value.trim());$('#sf').classList.remove('on')}};
+$('#tb').onclick=()=>{const d=document.documentElement,dark=getComputedStyle(d).getPropertyValue('--bg').trim()=='#101216';d.dataset.theme=dark?'light':'dark'};
+addEventListener('hashchange',()=>{route();scrollTo(0,0);$('#m').focus({preventScroll:true})});
+route();
+</script>
+</body>
+</html>
