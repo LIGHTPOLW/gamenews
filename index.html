@@ -341,7 +341,7 @@ function search(q){q=decodeURIComponent(q||'').trim();const r=q?A.filter(a=>(a.h
 /* ============ SUPABASE ============
    Pega aquí los datos de tu proyecto (Project Settings → API).
    La anon key es pública por diseño; NUNCA pongas la service_role key. */
-const SB_URL='https://qwpavyntpdgahuwxfwuk.supabase.co',SB_KEY='sb_publishable_ARkhekY6QgolPcYNZnNQOA_MrbUvDDS';
+const SB_URL='https://zxzbvfdpylvrnbvseack.supabase.co',SB_KEY='sb_publishable_8cny-BKFS1rHnpfSbBLdbw_QGNuDFyW';
 const sb=(window.supabase&&!SB_URL.startsWith('TU_'))?supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:'pkce'}}):null;
 let user=null;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
