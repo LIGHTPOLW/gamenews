@@ -69,6 +69,20 @@ small,.m{color:var(--mu);font-size:13px}
 .gr s{color:var(--mu);font-size:13px}.gr strong{font-weight:500}.dc{position:absolute;top:8px;left:8px;background:var(--ink);color:var(--bg);font:500 12px var(--bd);padding:2px 7px;border-radius:4px}
 .box{max-width:400px}.box input{display:block;width:100%;margin:6px 0 14px;padding:10px 12px;border:1px solid var(--ln);border-radius:6px;background:var(--sf);color:var(--ink);font:16px var(--bd)}
 .box label{font-size:14px;color:var(--mu)}.note{color:var(--mu);font-size:14px;margin-top:14px}
+.gr .card{cursor:pointer;display:block;width:100%;text-align:left;background:none;border:0;padding:0;color:inherit;font:inherit}
+.gr .card:hover h3{text-decoration:underline;text-underline-offset:3px}
+.mo{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+.mo[hidden]{display:none}
+.md{background:var(--sf);color:var(--ink);border:1px solid var(--ln);border-radius:12px;max-width:440px;width:100%;max-height:90vh;overflow:auto;padding:20px;position:relative}
+.md .th{aspect-ratio:16/9;margin-bottom:16px}
+.md h2{font-size:24px;margin-bottom:4px}
+.md .pr{display:flex;gap:10px;align-items:baseline;margin:12px 0 4px}.md .pr strong{font:700 28px var(--hd)}.md .pr s{color:var(--mu)}
+.md .sv{color:var(--ac);font-weight:500;font-size:14px}
+.md .xx{position:absolute;top:10px;right:10px;z-index:2}
+.buy{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.buy a{display:block;text-align:center;padding:11px 14px;border-radius:6px;font-weight:500;background:var(--ink);color:var(--bg);border:1px solid var(--ink)}
+.buy a:hover{opacity:.88}
+.md .note{margin-top:12px}
 footer{border-top:1px solid var(--ln);padding:28px 0 40px;color:var(--mu);font-size:14px}
 footer .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}footer nav ul{display:flex;gap:16px;flex-wrap:wrap}footer a:hover{color:var(--ink)}
 @media(max-width:820px){.g2,.cols,.og{grid-template-columns:1fr;gap:28px}.top{gap:12px}.dd{display:none!important}
@@ -91,7 +105,8 @@ nav{overflow-x:auto;white-space:nowrap}.tools .btn.p{display:none}}
  <div class="tr"><div class="w" id="trn"></div></div>
 </header>
 <main id="m" tabindex="-1"><div class="w" id="v"></div></main>
-<footer><div class="w"><span>© 2026 Game News. Noticias, guías y análisis de videojuegos.</span><nav aria-label="Pie"><ul id="fn"></ul></nav></div></footer>
+<div class="mo" id="mo" hidden role="dialog" aria-modal="true" aria-label="Comprar juego"><div class="md" id="md"></div></div>
+<footer><div class="w"><span>© 2026 Game News. Información sobre videojuegos.</span><nav aria-label="Pie"><ul id="fn"></ul></nav></div></footer>
 
 <script>
 const S={
@@ -160,56 +175,56 @@ const ago=d=>d?d==1?'Ayer':`Hace ${d} días`:'Hoy';
    20: Tráiler oficial de GTA 6
 */
 const IMG={
- 0:'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=85',
- 1:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=85',
- 2:'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
- 3:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
- 4:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
- 5:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
- 6:'https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85',
- 7:'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=1200&q=85',
- 8:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
- 9:'https://cdn.cloudflare.steamstatic.com/steam/apps/2842040/header.jpg',
- 10:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
- 11:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=85',
- 12:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
- 13:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
- 14:'https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/header.jpg',
- 15:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
- 16:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
- 17:'https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg',
- 18:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
- 19:'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=1200&q=85',
- 20:'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
- 21:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
- 22:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
- 23:'https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/header.jpg',
- 24:'https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85',
- 25:'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
- 26:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
- 27:'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=85',
- 28:'https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/header.jpg',
- 29:'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
- 30:'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=1200&q=85',
- 31:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
- 32:'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=85',
- 33:'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=85',
- 34:'https://images.unsplash.com/photo-1605901309584-818e25960a8f?auto=format&fit=crop&w=1200&q=85',
+ 0:'../pagina/sources/play5pro.webp',
+ 1:'../pagina/sources/nintendos.jpg',
+ 2:'../pagina/sources/gta6.jpg',
+ 3:'../pagina/sources/gamepass.jpg',
+ 4:'../pagina/sources/wukong.webp',
+ 5:'../pagina/sources/videojuegos.webp',
+ 6:'../pagina/sources/nintendodirect.jpeg',
+ 7:'../pagina/sources/ghostyotei.webp',
+ 8:'../pagina/sources/wukong.webp',
+ 9:'../pagina/sources/starwars.jpg',
+ 10:'../pagina/sources/eldenring.avif',
+ 11:'../pagina/sources/zelda.avif',
+ 12:'../pagina/sources/genshin.jpg',
+ 13:'../pagina/sources/eldenring.avif',
+ 14:'../pagina/sources/fortnite.jpg',
+ 15:'../pagina/sources/play5pro.webp',
+ 16:'../pagina/sources/wubil.png',
+ 17:'../pagina/sources/gta6.1.png',
+ 18:'../pagina/sources/xboxxs.png',
+ 19:'../pagina/sources/nintendos.jpg',
+ 20:'../pagina/sources/gta6t.avif',
+ 21:'../pagina/sources/wukongt.webp',
+ 22:'../pagina/sources/shadow.jpg',
+ 23:'../pagina/sources/spider2.jpg',
+ 24:'../pagina/sources/nintendodirect.jpeg',
+ 25:'../pagina/sources/iemcologne.avif',
+ 26:'../pagina/sources/vctamericans.jpg',
+ 27:'../pagina/sources/inter.jpg',
+ 28:'../pagina/sources/esperados.jpeg',
+ 29:'../pagina/sources/vs.jpg',
+ 30:'../pagina/sources/pcgta.jpg',
+ 31:'../pagina/sources/1persona.avif',
+ 32:'../pagina/sources/xboxxs.png',
+ 33:'../pagina/sources/nintendoes.jpg',
+ 34:'../pagina/sources/juegosvarios.jpg',
 };
 /* ============ IMÁGENES DE OFERTAS ============
    Formato:  'Nombre exacto del juego': 'ruta/imagen.jpg'
 */
 const IMGO={
- 'Grand Theft Auto V':'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
- 'Red Dead Redemption 2':'https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg',
- 'Cyberpunk 2077':'https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg',
- 'Elden Ring':'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg',
- 'The Witcher 3':'https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg',
- 'Hogwarts Legacy':'https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg',
- 'Resident Evil 4':'https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/header.jpg',
- 'Forza Horizon 5':'https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg',
- 'Marvel’s Spider-Man 2':'https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/header.jpg',
- 'Star Wars Jedi: Survivor':'https://cdn.cloudflare.steamstatic.com/steam/apps/1774580/header.jpg',
+ 'Grand Theft Auto V':'../pagina/sources/gtatienda.webp',
+ 'Red Dead Redemption 2':'../pagina/sources/rdr2tienda.jpg',
+ 'Cyberpunk 2077':'../pagina/sources/cyberpunk2077.jpg',
+ 'Elden Ring':'../pagina/sources/eldenring.avif',
+ 'The Witcher 3':'../pagina/sources/thewitcher3.avif',
+ 'Hogwarts Legacy':'../pagina/sources/hogwartslegacy.avif',
+ 'Resident Evil 4':'../pagina/sources/residentevil4.jpg',
+ 'Forza Horizon 5':'../pagina/sources/forzahorizon5.webp',
+ 'Marvel’s Spider-Man 2':'../pagina/sources/spider2tienda.avif',
+ 'Star Wars Jedi: Survivor':'../pagina/sources/starwarsjedisurvivor.jpg',
 };
 const th=(a,big)=>{const s=IMG[a.i];return `<div class="th${big?' big':''}" style="--h:${hue(a.sub||a)}">${s?`<img src="${s}" alt="${a.h}" loading="lazy">`:`<b>${a.sub||a}</b>`}${a.r?`<i>${a.r}</i>`:''}</div>`};
 const meta=a=>`${ago(a.d)}, ${a.m} min de lectura`;
@@ -230,56 +245,52 @@ function section(k,sub){
  return head(id||s.n,id?`${s.n}: ${id}`:s.d)+chips+list(by(a=>a.s==k&&(!id||a.sub==id)),'Aún no publicamos artículos en esta categoría.')}
 function topic(k){const t=T[k];if(!t)return nf();
  return head(t[0],t[1])+list(by(a=>a.t==k))}
-
-const BODY={
-0:["La PS5 Pro está diseñada para ofrecer una imagen más nítida y una tasa de cuadros más estable en juegos compatibles.","Su GPU más capaz y la tecnología de escalado PSSR ayudan a mejorar la imagen, aunque el resultado depende de cada título. Antes de comprarla, compara las mejoras de los juegos que usas con la diferencia de precio y revisa si tu pantalla admite las funciones deseadas."],
-1:["Nintendo Switch 2 mantiene el formato híbrido de jugar en portátil o en televisor, con hardware y controles renovados.","Si ya tienes una Switch, comprueba la compatibilidad de tus juegos, accesorios y partidas guardadas en la información oficial de Nintendo. La compatibilidad y las mejoras varían según el título."],
-2:["GTA VI es la próxima entrega principal de la saga de mundo abierto de Rockstar Games, ambientada en Vice City y el estado ficticio de Leonida.","Los tráileres oficiales permiten conocer personajes, escenarios y tono, pero no confirman todas las mecánicas. Para fechas, plataformas y cambios de lanzamiento, consulta los comunicados de Rockstar y separa los datos oficiales de los rumores."],
-3:["Xbox Game Pass ofrece un catálogo por suscripción cuyo contenido cambia con el tiempo.","Para saber qué juegos llegan este mes, revisa la sección oficial de Game Pass. Comprueba la fecha de incorporación, las plataformas disponibles y el plan requerido. Los anuncios de próximos juegos no significan que ya estén disponibles."],
-4:["Black Myth: Wukong es un juego de acción inspirado en la novela clásica china Viaje al Oeste.","El combate gira en torno a esquivas, transformaciones y enfrentamientos contra jefes. Observa sus patrones, administra tus recursos y confirma cualquier anuncio sobre expansiones o DLC en los canales oficiales de Game Science."],
-5:["Las fechas de lanzamiento de videojuegos cambian por decisiones de producción, pruebas y planificación comercial.","Una filtración no confirma un retraso. Busca el comunicado del estudio o distribuidor y distingue entre fecha exacta, ventana de lanzamiento y rumor. Verifica los calendarios oficiales antes de compartir una fecha."],
-6:["Nintendo Direct es una presentación en vídeo donde Nintendo anuncia juegos, fechas y novedades.","El contenido varía en cada edición. Para informar sobre un Direct concreto, revisa el vídeo oficial y relaciona cada anuncio con su plataforma y fecha. Así evitas atribuir a la presentación títulos que no se anunciaron."],
-7:["Ghost of Yōtei es una aventura de acción de Sucker Punch protagonizada por Atsu y ambientada en Japón durante el siglo XVII.","Para evaluar sus novedades, fíjate en la exploración, el combate y las actividades del mundo abierto. Trata como rumor cualquier supuesto gameplay sin una fuente verificable y consulta los canales oficiales para confirmar detalles."],
-8:["Black Myth: Wukong combina combates exigentes contra jefes con escenarios inspirados en la mitología china.","Una reseña completa debe valorar el combate, el diseño de niveles, los controles, el rendimiento y la estabilidad en la plataforma probada. La experiencia en PC y consola no siempre es idéntica."],
-9:["Star Wars Outlaws sigue a Kay Vess en una aventura de mundo abierto dentro del universo de Star Wars.","La experiencia combina exploración, sigilo, tiroteos y relaciones con facciones. Para valorar el juego, revisa el diseño de misiones, el ritmo de la campaña y el rendimiento, incluidos los cambios de sus actualizaciones."],
-10:["Shadow of the Erdtree amplía Elden Ring con una región nueva, armas, enemigos y combates contra jefes.","Explorar la Tierra de las Sombras exige aprender patrones y preparar el equipo. Antes de comprarla, comprueba la plataforma, la edición y los requisitos de acceso en la ficha oficial."],
-11:["The Legend of Zelda: Echoes of Wisdom pone a Zelda como protagonista y cambia la resolución de puzles de la serie.","La habilidad Tri permite crear ecos de objetos y criaturas para superar obstáculos. Su atractivo está en probar combinaciones y adaptar las soluciones al entorno, en lugar de buscar una única respuesta."],
-12:["Las Protogemas de Genshin Impact sirven para pedir deseos en los gachapones de personajes y armas.","Puedes obtenerlas mediante encargos diarios, misiones, cofres, eventos, logros y exploración. Las recompensas dependen del progreso y del contenido activo. Si ahorras para un personaje, revisa el banner y lleva la cuenta de tus deseos."],
-13:["Una build de Fuerza y Fe en Elden Ring combina armas físicas con encantamientos de apoyo o daño.","Prioriza Vigor y los requisitos del arma elegida antes de repartir puntos en demasiados atributos. Ajusta talismanes, afinidad y encantamientos según el jefe y tu estilo de juego."],
-14:["Mejorar en Fortnite requiere practicar puntería, conocer el mapa y tomar decisiones consistentes.","Ajusta la sensibilidad, practica en modos de entrenamiento y evita pelear sin cobertura. Revisa tus repeticiones para detectar errores como rotar tarde o exponerte demasiado, y trabaja un hábito a la vez."],
-15:["La configuración ideal de PS5 Pro depende del televisor y de las opciones disponibles en cada juego.","Comprueba la resolución, la frecuencia de actualización, VRR y los modos de fidelidad o rendimiento. Mantén el sistema actualizado y, si notas fallos de imagen, revisa también el cable HDMI y la configuración de pantalla."],
-16:["En Black Myth: Wukong, una build combina habilidades, espíritu, transformaciones y equipo según el enemigo.","Mejoras de esquiva y supervivencia ayudan a aprender los patrones de los jefes. Después puedes especializarte en daño. Cambia la configuración cuando una habilidad no encaje con el combate."],
-17:["Para prepararte para GTA VI, sigue los anuncios oficiales sobre lanzamiento, plataformas y ediciones.","No compres hardware ni reserves una edición basándote en rumores. Espera los requisitos y detalles publicados por Rockstar o la tienda oficial y compáralos con tu equipo antes de decidir."],
-18:["Si tu Xbox Series X|S presenta problemas de rendimiento, empieza por las actualizaciones y el almacenamiento disponible.","Cierra juegos que no uses y prueba los modos de rendimiento o calidad disponibles. Si falla la conexión, reinicia el router y prueba cable de red. Si el problema ocurre en un solo juego, revisa sus actualizaciones y el estado del servicio."],
-19:["Antes de transferir datos de Nintendo Switch a Switch 2, revisa las instrucciones oficiales de Nintendo.","Comprueba qué ocurre con perfiles, partidas guardadas y juegos digitales. Mantén ambas consolas cargadas y conectadas durante el proceso, y no borres los datos originales hasta verificar que la transferencia terminó."],
-20:["Los tráileres oficiales de GTA VI presentan personajes, escenarios y el tono de la nueva aventura.","Conviene separar lo que se ve en pantalla de las teorías de los fans. Una escena cinematográfica no confirma por sí misma una mecánica. Para fechas y plataformas, utiliza los canales oficiales de Rockstar."],
-21:["Los avances de Black Myth: Wukong destacan sus criaturas, escenarios y enfrentamientos inspirados en la mitología china.","Un montaje promocional no explica todo el sistema de juego. Compara los avances con vídeos de juego completos y análisis técnicos de la plataforma que te interesa."],
-22:["Shadow of the Erdtree lleva a los jugadores de Elden Ring a la Tierra de las Sombras.","La expansión incluye una nueva zona, equipo y desafíos. Comprueba que tienes el juego base en la misma plataforma y revisa los requisitos de acceso antes de comprarla."],
-23:["Marvel’s Spider-Man 2 continúa las historias de Peter Parker y Miles Morales en una Nueva York ampliada.","El juego combina desplazamiento con telarañas, combate y misiones para ambos protagonistas. Consulta la ficha oficial de tu plataforma para revisar requisitos, funciones y contenido de cada edición."],
-24:["Worlds es el campeonato mundial de League of Legends, con equipos que llegan desde distintas ligas y regiones.","El formato, los participantes y el calendario cambian según la edición. Consulta LoL Esports para confirmar resultados. Para analizar una partida, observa la selección de campeones, los objetivos neutrales y el control de visión."],
-25:["Intel Extreme Masters Cologne forma parte del circuito competitivo de Counter-Strike 2.","Para publicar resultados, verifica el cuadro oficial, los marcadores por mapa y la fase del torneo. La economía, las rondas de pistola y el rendimiento en ataque y defensa ayudan a entender el resultado."],
-26:["VCT Americas reúne a equipos de Valorant que compiten por avanzar en el circuito internacional.","Los cruces y resultados dependen de cada etapa. Confirma el calendario en los canales oficiales y analiza la composición de agentes, el control del mapa y los ajustes entre mitades."],
-27:["The International es uno de los torneos más reconocidos de Dota 2.","La lista de equipos y el sistema de clasificación dependen de cada edición. Consulta los anuncios oficiales y, al analizar partidas, fíjate en la selección de héroes, los objetos y el control de objetivos."],
-28:["Una lista de juegos esperados resulta más útil si incluye género, estudio, plataformas y fecha confirmada.","Distingue los lanzamientos con día anunciado de aquellos que tienen una ventana general o siguen sin fecha. La expectativa es subjetiva y no equivale a una garantía de calidad. Verifica los datos en las páginas oficiales."],
-29:["PS5 y PS5 Pro comparten la biblioteca de PlayStation 5, pero no ofrecen el mismo rendimiento gráfico.","PS5 Pro incorpora una GPU más capaz y PSSR en títulos compatibles. La mejora depende de cada juego. La PS5 estándar sigue siendo una opción razonable si priorizas el precio."],
-30:["No conviene recomendar componentes exactos para GTA VI en PC sin consultar los requisitos oficiales publicados para esa versión.","Cuando estén disponibles, compara procesador, tarjeta gráfica, RAM y almacenamiento con los requisitos mínimos y recomendados. Hasta entonces, cualquier lista de componentes concretos sería una estimación, no una especificación confirmada."],
-31:["Los juegos para un jugador permiten desarrollar historias y misiones sin exigir una partida multijugador.","Su valor depende del guion, el diseño, la accesibilidad y el rendimiento, no de tener funciones en línea. Hay propuestas individuales, cooperativas y mixtas para distintos gustos."],
-32:["La biblioteca de Xbox Series X|S abarca carreras, acción, rol, aventura y juegos independientes.","Elige según el género, el modo individual o cooperativo y el presupuesto. Comprueba si el título está incluido en Game Pass y si ofrece mejoras para Series X|S en la tienda oficial."],
-33:["Nintendo Switch 2 combina juegos nuevos con opciones de compatibilidad con títulos de la generación anterior.","Confirma cada juego en la web de Nintendo o del desarrollador. Si tienes una biblioteca digital de Switch, revisa las condiciones de compatibilidad y transferencia antes de cambiar de consola."],
-34:["Para comparar próximos lanzamientos, revisa género, estudio, plataformas y fecha anunciada.","Distingue los anuncios oficiales de las filtraciones y actualiza la información cuando el desarrollador publique novedades. Si todavía no existe una fecha exacta, indica ese estado en vez de inventar un día."]
+const BODY = {
+  0: "La PlayStation 5 Pro llegó como una versión más potente de la PS5 original. Su principal mejora está en la GPU, junto con tecnologías como PlayStation Spectral Super Resolution (PSSR), pensadas para mejorar la calidad de imagen sin sacrificar tanto rendimiento.\n\nSony la orientó a jugadores con televisores 4K y pantallas compatibles con frecuencias altas. Algunos juegos reciben parches específicos para aprovechar mejor el hardware, aunque la PS5 Pro no sustituye a la PS5 normal y muchos títulos siguen funcionando en ambas consolas.\n\nLa decisión de comprarla depende principalmente de tu pantalla y de cuánto valores una imagen más estable en modos de rendimiento y mayor resolución.",
+  1: "Nintendo Switch 2 es la sucesora de Nintendo Switch y conserva el concepto de consola híbrida. La consola cuenta con una pantalla LCD de 7.9 pulgadas, resolución de 1080p y soporte para hasta 120 Hz en títulos compatibles.\n\nNintendo también incorporó Joy-Con 2 con conexión magnética y funciones adicionales. La consola admite juegos de Switch mediante compatibilidad con títulos físicos y digitales compatibles, aunque existen excepciones.\n\nEntre sus funciones destaca GameChat, pensado para comunicación durante las partidas, y el modo TV con salida de hasta 4K en juegos compatibles.",
+  2: "Rockstar Games confirmó que Grand Theft Auto VI llegará el 26 de mayo de 2026 para PlayStation 5 y Xbox Series X|S. El juego está ambientado en el estado de Leonida y sigue a Jason Duval y Lucia Caminos.\n\nLa historia se desarrolla en Vice City y otras zonas del estado. Rockstar ha presentado varios tráileres y material oficial donde aparecen personajes, lugares y situaciones relacionadas con la historia.\n\nEl lanzamiento marca el regreso de la serie principal de Grand Theft Auto después de Grand Theft Auto V, publicado originalmente en 2013.",
+  3: "Xbox Game Pass reúne distintos planes de suscripción con acceso a un catálogo de juegos para consola, PC y dispositivos compatibles, según el plan contratado.\n\nEl catálogo cambia con el tiempo. Algunos títulos se incorporan al servicio y otros salen después de un periodo determinado. Los lanzamientos de Xbox Game Studios también forman parte de la estrategia del servicio.\n\nPara saber qué juegos están disponibles en un momento concreto, conviene revisar el catálogo oficial de Xbox Game Pass, ya que las fechas de entrada y salida cambian.",
+  4: "Black Myth: Wukong es un action RPG desarrollado por Game Science y basado en elementos de Viaje al Oeste, una obra clásica de la literatura china.\n\nEl jugador controla al Destinado, un personaje inspirado en Sun Wukong. El juego combina combate cuerpo a cuerpo, transformaciones, habilidades y enfrentamientos contra diferentes jefes.\n\nSu primer gran contenido adicional debe distinguirse de las actualizaciones normales del juego. Game Science ha hablado públicamente sobre contenido futuro, pero los detalles oficiales de un DLC deben comprobarse en sus canales antes de considerarlos confirmados.",
+  5: "Los retrasos forman parte del desarrollo de videojuegos y suelen producirse cuando un estudio necesita más tiempo para terminar el producto o mejorar su calidad.\n\nEntre los lanzamientos con fechas anunciadas, los cambios de calendario deben tomarse a partir de comunicados oficiales de los desarrolladores o distribuidores. Una fecha que aparece en una tienda o en una filtración no equivale a una confirmación.\n\nPor eso, cuando un juego esperado cambia de fecha, conviene distinguir entre un anuncio oficial, un rumor y una fecha provisional.",
+  6: "Nintendo Direct es el formato de presentación utilizado por Nintendo para mostrar información sobre juegos, actualizaciones y productos de la compañía.\n\nDurante estas presentaciones Nintendo suele anunciar fechas de lanzamiento, nuevos tráileres, contenido adicional y títulos de terceros. El contenido cambia en cada emisión, por lo que una lista de anuncios depende de la edición concreta del Direct.\n\nPara conocer todos los anuncios de una presentación específica, la fuente más fiable es la emisión oficial y los comunicados publicados por Nintendo después del evento.",
+  7: "Ghost of Yōtei es la nueva entrega de Sucker Punch Productions dentro de la línea de juegos iniciada con Ghost of Tsushima.\n\nEl juego está protagonizado por Atsu y se desarrolla alrededor del monte Yōtei, en Hokkaido, durante el Japón del siglo XVII. La historia presenta un nuevo personaje y un escenario distinto al de Jin Sakai.\n\nSony anunció el juego para PlayStation 5 y posteriormente presentó material adicional sobre su mundo, combate y protagonista.",
+  8: "Black Myth: Wukong combina exploración, acción y combates contra jefes dentro de un mundo inspirado en la mitología y literatura china.\n\nEl sistema de combate gira alrededor de diferentes posturas, hechizos, transformaciones y armas. El Destinado también cuenta con recursos para adaptar su forma de jugar según el enemigo.\n\nEl apartado técnico destaca por sus escenarios detallados y por el uso de tecnologías modernas de iluminación y renderizado en las versiones compatibles.",
+  9: "Star Wars Outlaws es un juego de acción y aventura desarrollado por Massive Entertainment y publicado por Ubisoft.\n\nLa historia sigue a Kay Vess y a su compañero Nix mientras intentan realizar un gran golpe en el mundo criminal de Star Wars. El juego permite visitar distintos planetas y relacionarse con organizaciones criminales.\n\nSu propuesta combina exploración, combate, sigilo, vehículos y misiones relacionadas con las decisiones del jugador.",
+  10: "Elden Ring: Shadow of the Erdtree es la expansión de Elden Ring desarrollada por FromSoftware.\n\nLa expansión lleva al jugador a la Tierra de las Sombras, una región separada del mapa principal con nuevas zonas, mazmorras, armas, enemigos, jefes y personajes.\n\nShadow of the Erdtree mantiene el sistema de combate de Elden Ring y añade nuevos mecanismos de progresión para equilibrar la dificultad dentro de su nuevo territorio.",
+  11: "The Legend of Zelda: Echoes of Wisdom presenta a la princesa Zelda como protagonista principal. El juego introduce la habilidad de crear réplicas de objetos y enemigos mediante el Tri Rod.\n\nEstas réplicas sirven para resolver acertijos, superar obstáculos y combatir. La aventura combina exploración de Hyrule con mazmorras y situaciones en las que el jugador debe elegir qué objeto reproducir.\n\nEl título fue lanzado para Nintendo Switch y ofrece una propuesta diferente dentro de la serie Zelda.",
+  12: "Genshin Impact utiliza Protogemas como una de sus principales monedas para conseguir Destinos entrelazados y Destinos conocidos, necesarios para realizar deseos.\n\nLas Protogemas se obtienen mediante actividades como misiones, eventos, encargos diarios, logros, exploración y algunos contenidos del juego. La cantidad obtenida depende de la actividad realizada.\n\nSi quieres conseguirlas de forma constante, completar los encargos diarios y participar en eventos disponibles suele ser una de las formas más directas dentro del juego.",
+  13: "Una build de Fuerza y Fe en Elden Ring combina armas que aprovechan Fuerza con armas, encantamientos y atributos relacionados con Fe.\n\nEste tipo de personaje ofrece opciones para combate cuerpo a cuerpo y ataques a distancia mediante encantamientos. La distribución de atributos depende del arma y del nivel total del personaje.\n\nAntes de repartir puntos conviene revisar los requisitos del arma elegida y el escalado que ofrece, porque dos armas con requisitos parecidos pueden aprovechar los atributos de manera distinta.",
+  14: "Fortnite incluye distintas formas de mejorar durante una partida. Aprender a construir, apuntar, moverte y administrar tus recursos tiene un impacto directo en el resultado.\n\nTambién ayuda conocer las armas disponibles y adaptar tu inventario al tipo de combate que esperas encontrar. La posición dentro de la zona segura influye en las decisiones durante la partida.\n\nLas estrategias más útiles cambian según el modo de juego y las actualizaciones de cada temporada.",
+  15: "La PS5 Pro incluye opciones de configuración relacionadas con resolución, frecuencia de actualización, HDR y salida de vídeo.\n\nSi tu pantalla admite 4K y una frecuencia alta, conviene activar las funciones compatibles tanto en la consola como en el televisor. También debes comprobar que el cable HDMI y el puerto utilizado admitan las características de tu pantalla.\n\nLos ajustes específicos de cada juego también importan, ya que algunos títulos ofrecen modos gráficos distintos para priorizar resolución o rendimiento.",
+  16: "Black Myth: Wukong permite adaptar el personaje mediante armas, armaduras, habilidades y hechizos. No existe una única configuración válida para todos los enemigos.\n\nPara una build equilibrada conviene elegir habilidades que complementen tu forma de combatir. También debes prestar atención a las bonificaciones de las armas y armaduras y a los recursos necesarios para mejorar el equipo.\n\nContra jefes difíciles suele ser más importante aprender sus patrones de ataque y aprovechar las ventanas de daño que aumentar una estadística sin una estrategia definida.",
+  17: "Grand Theft Auto VI está previsto para PlayStation 5 y Xbox Series X|S. Rockstar ha situado la historia en Leonida, un estado ficticio inspirado en Florida, con Vice City como uno de sus lugares principales.\n\nLa historia gira alrededor de Jason Duval y Lucia Caminos, dos protagonistas involucrados en actividades criminales.\n\nAntes del lanzamiento, Rockstar ha mostrado distintos elementos del mundo abierto, personajes y situaciones del juego mediante material oficial.",
+  18: "Xbox Series X y Xbox Series S pertenecen a la misma generación, pero tienen diferencias de hardware y resolución.\n\nSeries X está orientada a un rendimiento superior y cuenta con una unidad de disco en su diseño estándar. Series S es más pequeña y está enfocada a juegos digitales, con un hardware pensado para resoluciones inferiores.\n\nEn ambas consolas puedes acceder al ecosistema Xbox y a servicios como Game Pass según el plan contratado.",
+  19: "Nintendo Switch 2 permite transferir parte de la información de una Nintendo Switch anterior mediante las herramientas oficiales de transferencia.\n\nAntes de comenzar, debes comprobar que ambas consolas estén actualizadas y seguir el proceso indicado por Nintendo. La transferencia depende del tipo de datos y del juego.\n\nLos datos guardados y otros contenidos tienen condiciones específicas, así que conviene revisar las indicaciones oficiales para evitar perder información.",
+  20: "El tráiler oficial de Grand Theft Auto VI mostró nuevas imágenes de Vice City y presentó a sus protagonistas, Jason Duval y Lucia Caminos.\n\nEl material también permite observar vehículos, zonas urbanas, playas, clubes y otros escenarios del estado de Leonida. Rockstar ha usado estos avances para presentar parte del mundo y el tono de la historia.\n\nLa fecha anunciada para el juego es el 26 de mayo de 2026, con versiones para PlayStation 5 y Xbox Series X|S.",
+  21: "Black Myth: Wukong ha recibido actualizaciones destinadas a mejorar el juego y corregir problemas detectados después de su lanzamiento.\n\nLos avances publicados por Game Science muestran combates, escenarios y enfrentamientos con diferentes enemigos. El juego sigue centrado en la historia del Destinado y en sus enfrentamientos contra criaturas inspiradas en la mitología china.\n\nLos detalles de nuevos contenidos deben distinguirse entre actualizaciones confirmadas y proyectos todavía no anunciados oficialmente.",
+  22: "Shadow of the Erdtree amplía Elden Ring con una nueva región, nuevos enemigos, jefes, armas y zonas para explorar.\n\nEl contenido de lanzamiento está pensado para jugadores que ya avanzaron bastante en el juego principal. Para acceder a la expansión es necesario cumplir determinados requisitos dentro de Elden Ring.\n\nLa expansión también añade el sistema de Bendiciones del Reino de las Sombras, destinado a mejorar el rendimiento del personaje dentro de la nueva región.",
+  23: "Marvel’s Spider-Man 2 es una aventura de acción desarrollada por Insomniac Games. La historia sigue a Peter Parker y Miles Morales mientras enfrentan nuevas amenazas en Nueva York.\n\nEl juego permite alternar entre ambos Spider-Man y utiliza sus diferentes habilidades para el combate y la exploración. También incorpora desplazamiento con telarañas, alas de telaraña y nuevas zonas de la ciudad.\n\nLa versión para PC llegó posteriormente con opciones gráficas adicionales y compatibilidad con distintas configuraciones de hardware.",
+  24: "Los Nintendo Direct reúnen anuncios relacionados con los próximos juegos y productos de Nintendo. Dependiendo de la presentación, la compañía muestra títulos propios, juegos de terceros, fechas de lanzamiento y contenido adicional.\n\nLa información de cada Direct cambia según la edición. Para evitar confundir anuncios de diferentes presentaciones, conviene identificar la fecha exacta del evento y revisar la lista oficial publicada por Nintendo.",
+  25: "IEM Cologne es uno de los eventos destacados del calendario competitivo de Counter-Strike. Equipos profesionales se enfrentan durante distintas fases para buscar el título y una parte del premio.\n\nLos resultados dependen de cada edición y de los equipos participantes. Las estadísticas individuales, mapas ganados y resultados de cada serie ayudan a entender el desempeño de los equipos durante el torneo.",
+  26: "VCT Americas reúne a equipos profesionales de VALORANT de la región de América. La competencia se divide en etapas durante el año y entrega puntos y oportunidades para avanzar en el circuito internacional.\n\nLos playoffs reúnen a los equipos mejor posicionados de cada etapa. Los resultados y clasificaciones cambian conforme avanzan las jornadas, por lo que deben consultarse según la fecha del torneo.",
+  27: "The International es el principal campeonato competitivo de Dota 2 organizado alrededor del circuito profesional del juego.\n\nLos equipos participantes llegan mediante clasificaciones y resultados obtenidos durante la temporada, según el sistema competitivo vigente. El torneo reúne a organizaciones de distintas regiones y define al campeón de esa edición.\n\nEl formato y los criterios de clasificación han cambiado en diferentes años, así que cada edición tiene su propio calendario y sistema de acceso.",
+  28: "Los juegos más esperados dependen de sus fechas anunciadas, plataformas confirmadas y del interés generado por sus desarrolladores.\n\nEntre los títulos con gran atención pública se encuentran proyectos como Grand Theft Auto VI, Ghost of Yōtei y otros lanzamientos de estudios grandes. La lista cambia cuando aparecen nuevos anuncios o cuando un juego modifica su fecha.\n\nPara hacer una lista precisa conviene separar los juegos con fecha confirmada de aquellos cuyo lanzamiento todavía no tiene día definido.",
+  29: "La PS5 Pro ofrece mejoras de hardware frente a la PS5 estándar, principalmente en el rendimiento gráfico.\n\nLa diferencia se aprecia sobre todo en juegos compatibles con las funciones específicas de la consola. La PS5 original sigue siendo capaz de ejecutar el catálogo de PlayStation 5, mientras que la PS5 Pro busca ofrecer una experiencia gráfica más avanzada.\n\nLa elección depende de factores como la pantalla, el presupuesto y la importancia que le des a la resolución y al rendimiento.",
+  30: "GTA VI llegará a consolas de actual generación, pero Rockstar no ha anunciado una versión para PC junto con las versiones de PlayStation 5 y Xbox Series X|S.\n\nPor eso, todavía no existe una lista oficial de requisitos de PC para GTA VI. Cualquier procesador, tarjeta gráfica, cantidad de RAM o almacenamiento publicados como requisitos deben tratarse como información no confirmada hasta que Rockstar anuncie una versión para ordenador.\n\nCuando exista una versión para PC, los requisitos oficiales serán la referencia adecuada para saber si un equipo puede ejecutarla.",
+  31: "Los juegos para un jugador siguen ocupando una parte importante de la industria. Muchos estudios continúan lanzando aventuras centradas en campañas narrativas, exploración y progresión individual.\n\nTítulos como The Legend of Zelda: Echoes of Wisdom, Black Myth: Wukong y Elden Ring: Shadow of the Erdtree muestran distintas formas de diseñar experiencias centradas en el jugador.\n\nSu éxito también demuestra que existe demanda para juegos con campañas extensas y sistemas de juego pensados para avanzar a tu propio ritmo.",
+  32: "Xbox Series X|S cuenta con un catálogo amplio que incluye juegos propios de Xbox, títulos de terceros y juegos disponibles mediante servicios como Game Pass.\n\nEntre los títulos destacados de la generación se encuentran Forza Horizon 5, Halo Infinite, Microsoft Flight Simulator y varios juegos multiplataforma.\n\nLa disponibilidad concreta de cada juego depende de la tienda, la región y los cambios del catálogo de los servicios de suscripción.",
+  33: "Nintendo Switch 2 cuenta con juegos desarrollados específicamente para la nueva consola y también ofrece compatibilidad con una selección de juegos de Nintendo Switch.\n\nLa lista de títulos confirmados crece conforme Nintendo y otras compañías anuncian sus proyectos. Algunos juegos reciben versiones mejoradas para aprovechar el hardware de Switch 2.\n\nPara saber si un juego tendrá versión nativa, actualización o compatibilidad con la versión anterior, conviene revisar la información oficial del editor.",
+  34: "Elegir un videojuego depende de factores como el género, la plataforma, el precio y el tiempo disponible para jugar.\n\nSi buscas una aventura narrativa, conviene revisar la duración de la campaña y el tipo de progresión. Para juegos competitivos, importa más el modo multijugador, la comunidad y la frecuencia de actualizaciones.\n\nTambién es útil comprobar los requisitos técnicos y las plataformas antes de comprar, sobre todo en PC."
 };
-function articleBody(a){
- const c=BODY[a.i]||["Consulta la página oficial del juego y los comunicados de su desarrollador para verificar fechas, plataformas y funciones.","Distingue la información confirmada de los rumores y revisa las actualizaciones antes de tomar una decisión de compra."];
- return `<p><strong>${c[0]}</strong></p><p>${c[1]}</p><p class="note">Información editorial. Las fechas, precios, disponibilidad y anuncios nuevos deben verificarse en los canales oficiales del juego o de su distribuidor.</p>`;
-}
-
 function art(i){const a=A[i];if(!a)return nf();
- const rel=by(x=>x.i!=a.i&&(x.s==a.s||(a.t&&x.t==a.t))).slice(0,4);
- return `<article class="art"><div class="crumb"><a href="#/">Inicio</a> / <a href="#/${a.s}">${S[a.s].n}</a> / <a href="#/${a.s}/${sl(a.sub)}">${a.sub}</a></div>
- <h1>${a.h}</h1><span class="m">${meta(a)}, Redacción Game News</span>${th(a,1)}
- ${articleBody(a)}
- ${a.t?`<p><a class="chip" href="#/tema/${a.t}">Más sobre ${T[a.t][0]}</a></p>`:''}</article>
- <section class="sec"><h2>Relacionadas</h2>${rel.map(row).join('')}</section>`}
+  const rel=by(x=>x.i!=a.i&&(x.s==a.s||(a.t&&x.t==a.t))).slice(0,4);
+  const body=(BODY[a.i]||'').split(/\\n\\n/).map(p=>`<p>${p}</p>`).join('');
+  return `<article class="art"><div class="crumb"><a href="#/">Inicio</a> / <a href="#/${a.s}">${S[a.s].n}</a> / <a href="#/${a.s}/${sl(a.sub)}">${a.sub}</a></div>
+  <h1>${a.h}</h1><span class="m">${meta(a)}, Redacción Game News</span>${th(a,1)}
+  ${body}
+  ${a.t?`<p><a class="chip" href="#/tema/${a.t}">Más sobre ${T[a.t][0]}</a></p>`:''}</article>
+  <section class="sec"><h2>Relacionadas</h2>${rel.map(row).join('')}</section>`}
+
 let pf='all',mx=1500,so='d';
 function ofertas(){return head('Ofertas en juegos','Descuentos en juegos de todas las plataformas.')+`<div class="og"><aside>
  <div class="chips" style="margin:0;flex-direction:column;align-items:flex-start">${Object.keys(PL).map(k=>`<button class="chip${k==pf?' on':''}" data-p="${k}">${PL[k]}</button>`).join('')}</div>
@@ -288,10 +299,28 @@ function ofertas(){return head('Ofertas en juegos','Descuentos en juegos de toda
  <div><div class="gr" id="gr"></div></div></div>`}
 function grid(){
  const r=O.map(o=>({n:o[0],p:o[1],o:o[2],d:o[3],f:Math.round(o[2]*(100-o[3])/100)})).filter(o=>(pf=='all'||o.p.includes(pf))&&o.f<=mx).sort((a,b)=>so=='d'?b.d-a.d:a.f-b.f);
- $('#gr').innerHTML=r.map(o=>`<div><div class="th" style="--h:${hue(o.n)}"><span class="dc">-${o.d}%</span>${IMGO[o.n]?`<img src="${IMGO[o.n]}" alt="${o.n}" loading="lazy">`:`<b>${o.n}</b>`}</div><h3>${o.n}</h3><small>${o.p.split(' ').map(x=>PL[x]).join(', ')}</small><div class="pc"><strong>$${o.f}</strong><s>$${o.o}</s></div></div>`).join('')||'<p>Ninguna oferta coincide. Sube el precio máximo o elige otra plataforma.</p>'}
+ $('#gr').innerHTML=r.map(o=>`<button class="card" data-g="${o.n}" type="button"><div class="th" style="--h:${hue(o.n)}"><span class="dc">-${o.d}%</span>${IMGO[o.n]?`<img src="${IMGO[o.n]}" alt="${o.n}" loading="lazy">`:`<b>${o.n}</b>`}</div><h3>${o.n}</h3><small>${o.p.split(' ').map(x=>PL[x]).join(', ')}</small><div class="pc"><strong>$${o.f}</strong><s>$${o.o}</s></div></button>`).join('')||'<p>Ninguna oferta coincide. Sube el precio máximo o elige otra plataforma.</p>'}
+
+const STORE={ps:['PlayStation Store',n=>'https://store.playstation.com/es-mx/search/'+encodeURIComponent(n)],
+ xbox:['Xbox Store',n=>'https://www.xbox.com/es-MX/search?q='+encodeURIComponent(n)],
+ switch:['Nintendo eShop',n=>'https://www.nintendo.com/es-mx/Search/Search-299117.html?q='+encodeURIComponent(n)],
+ pc:['Steam',n=>{const m=(IMGO[n]||'').match(/apps\/(\d+)/);return m?'https://store.steampowered.com/app/'+m[1]:'https://store.steampowered.com/search/?term='+encodeURIComponent(n)}]};
+function openBuy(n){
+ const o=O.find(x=>x[0]==n);if(!o)return;
+ const f=Math.round(o[2]*(100-o[3])/100),ps=o[1].split(' ');
+ $('#md').innerHTML=`<button class="ib xx" id="xc" type="button" aria-label="Cerrar">Cerrar</button>
+ <div class="th" style="--h:${hue(n)}">${IMGO[n]?`<img src="${IMGO[n]}" alt="${n}">`:`<b>${n}</b>`}<span class="dc">-${o[3]}%</span></div>
+ <h2>${n}</h2><small>${ps.map(x=>PL[x]).join(', ')}</small>
+ <div class="pr"><strong>$${f}</strong><s>$${o[2]}</s></div><div class="sv">Ahorras $${o[2]-f}</div>
+ <div class="buy">${ps.map(x=>`<a href="${STORE[x][1](n)}" target="_blank" rel="noopener noreferrer">Comprar en ${STORE[x][0]}</a>`).join('')}</div>
+ <p class="note">Te llevamos a la tienda oficial para completar la compra. El precio final puede variar según tu región.</p>`;
+ $('#mo').hidden=false;$('#xc').focus();document.body.style.overflow='hidden'}
+function closeBuy(){$('#mo').hidden=true;document.body.style.overflow=''}
+$('#mo').onclick=e=>{if(e.target.id=='mo'||e.target.id=='xc')closeBuy()};
+addEventListener('keydown',e=>{if(e.key=='Escape')closeBuy()});
 function bind(){
  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{pf=b.dataset.p;route()});
- const x=$('#mx');if(x){x.oninput=()=>{mx=+x.value;$('#mv').textContent=mx;grid()};$('#so').value=so;$('#so').onchange=e=>{so=e.target.value;grid()};grid()}
+ const x=$('#mx');if(x){x.oninput=()=>{mx=+x.value;$('#mv').textContent=mx;grid()};$('#gr').onclick=e=>{const c=e.target.closest('[data-g]');if(c)openBuy(c.dataset.g)};$('#so').value=so;$('#so').onchange=e=>{so=e.target.value;grid()};grid()}
  const f=$('#cf');if(f)f.onsubmit=e=>{e.preventDefault();$('#cm').textContent='Esta es una demo: aún no hay servidor de cuentas conectado.'}}
 function search(q){q=decodeURIComponent(q||'').trim();const r=q?A.filter(a=>(a.h+a.sub+S[a.s].n).toLowerCase().includes(q.toLowerCase())):[];
  return head('Resultados para “'+q.replace(/</g,'&lt;')+'”',r.length+' artículos encontrados')+(r.length?r.map(row).join(''):'<p>Prueba con otro término, por ejemplo el nombre de un juego o una consola.</p>')}
@@ -302,7 +331,7 @@ const acct=m=>head(m?'Crea tu cuenta':'Inicia sesión',m?'Guarda artículos y re
 const about=()=>head('Acerca de Game News','Noticias, reseñas y guías de videojuegos, escritas con claridad.')+`<div class="art"><p>Cubrimos consolas, PC y esports. Si tienes una pista o quieres colaborar, escríbenos a redaccion@gamenews.example.</p></div>`;
 const nf=()=>head('Página no encontrada','Esta dirección no existe o cambió.')+'<a class="btn p" href="#/">Volver al inicio</a>';
 
-function route(){
+function route(){closeBuy();
  const p=location.hash.replace(/^#\/?/,'').split('/'),k=p[0];let h;
  if(!k)h=home();else if(S[k])h=section(k,p[1]);else if(k=='tema')h=topic(p[1]);else if(k=='articulo')h=art(+p[1]);
  else if(k=='ofertas')h=ofertas();else if(k=='buscar')h=search(p[1]);else if(k=='cuenta')h=acct(p[1]=='registro');else if(k=='acerca')h=about();else h=nf();
