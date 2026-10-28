@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Game News</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#f6f7f9;--sf:#fff;--ink:#15171c;--mu:#646b78;--ln:#e3e5ea;--ac:#2d4fe0;--tl:90%;--tt:26%;
 --hd:'Bricolage Grotesque',system-ui,sans-serif;--bd:'Instrument Sans',system-ui,sans-serif;
@@ -98,7 +99,7 @@ nav{overflow-x:auto;white-space:nowrap}.tools .btn.p{display:none}}
   <div class="tools">
    <button class="ib" id="sb" aria-label="Buscar">Buscar</button>
    <button class="ib" id="tb" aria-label="Cambiar tema">Tema</button>
-   <a class="btn p" href="#/cuenta">Iniciar sesión</a>
+   <a class="btn p" id="ab" href="#/cuenta">Iniciar sesión</a>
   </div>
  </div>
  <div class="w" id="sf"><input id="q" type="search" placeholder="Busca juegos, consolas o noticias y pulsa Enter" aria-label="Buscar"></div>
@@ -321,12 +322,38 @@ addEventListener('keydown',e=>{if(e.key=='Escape')closeBuy()});
 function bind(){
  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{pf=b.dataset.p;route()});
  const x=$('#mx');if(x){x.oninput=()=>{mx=+x.value;$('#mv').textContent=mx;grid()};$('#gr').onclick=e=>{const c=e.target.closest('[data-g]');if(c)openBuy(c.dataset.g)};$('#so').value=so;$('#so').onchange=e=>{so=e.target.value;grid()};grid()}
- const f=$('#cf');if(f)f.onsubmit=e=>{e.preventDefault();$('#cm').textContent='Esta es una demo: aún no hay servidor de cuentas conectado.'}}
+ const f=$('#cf');if(f)f.onsubmit=async e=>{e.preventDefault();
+  const cm=$('#cm'),btn=f.querySelector('button'),reg=!!$('#u');
+  if(!sb){cm.textContent='Falta configurar Supabase: pon tu URL y tu anon key en SB_URL y SB_KEY.';return}
+  const email=$('#e').value.trim(),password=$('#p').value;
+  btn.disabled=true;cm.textContent='Un momento…';
+  const r=reg
+   ?await sb.auth.signUp({email,password,options:{data:{nombre:$('#u').value.trim()},emailRedirectTo:location.origin+location.pathname}})
+   :await sb.auth.signInWithPassword({email,password});
+  btn.disabled=false;
+  if(r.error){cm.textContent=errAuth(r.error.message);return}
+  if(reg&&!r.data.session){cm.textContent='Revisa tu correo para confirmar tu cuenta.';return}
+  /* si hay sesión, onAuthStateChange actualiza la página */
+ };
+ const lo=$('#lo');if(lo)lo.onclick=async()=>{lo.disabled=true;await sb.auth.signOut()}}
 function search(q){q=decodeURIComponent(q||'').trim();const r=q?A.filter(a=>(a.h+a.sub+S[a.s].n).toLowerCase().includes(q.toLowerCase())):[];
  return head('Resultados para “'+q.replace(/</g,'&lt;')+'”',r.length+' artículos encontrados')+(r.length?r.map(row).join(''):'<p>Prueba con otro término, por ejemplo el nombre de un juego o una consola.</p>')}
-const acct=m=>head(m?'Crea tu cuenta':'Inicia sesión',m?'Guarda artículos y recibe avisos de tus juegos.':'Accede para guardar tus artículos.')+
+/* ============ SUPABASE ============
+   Pega aquí los datos de tu proyecto (Project Settings → API).
+   La anon key es pública por diseño; NUNCA pongas la service_role key. */
+const SB_URL='https://qwpavyntpdgahuwxfwuk.supabase.co',SB_KEY='sb_publishable_ARkhekY6QgolPcYNZnNQOA_MrbUvDDS';
+const sb=(window.supabase&&!SB_URL.startsWith('TU_'))?supabase.createClient(SB_URL,SB_KEY,{auth:{flowType:'pkce'}}):null;
+let user=null;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const errAuth=m=>({'Invalid login credentials':'Correo o contraseña incorrectos.','Email not confirmed':'Primero confirma tu correo (revisa tu bandeja).','User already registered':'Ese correo ya tiene una cuenta.'}[m]
+ ||(/at least 6/i.test(m)?'La contraseña debe tener al menos 6 caracteres.':/rate limit/i.test(m)?'Demasiados intentos. Espera un momento.':m));
+const uname=()=>user?(user.user_metadata&&user.user_metadata.nombre)||(user.email||'').split('@')[0]:'';
+function paintUser(){const b=$('#ab');b.textContent=user?uname():'Iniciar sesión'}
+const prof=()=>head('Mi cuenta','Sesión iniciada.')+`<div class="box"><p><strong>${esc(uname())}</strong><br><span class="m">${esc(user.email||'')}</span></p><button class="btn p" id="lo" type="button">Cerrar sesión</button></div>`;
+if(sb)sb.auth.onAuthStateChange((ev,ses)=>{user=ses?ses.user:null;paintUser();if(/^#\/cuenta/.test(location.hash))route()});
+const acct=m=>user?prof():head(m?'Crea tu cuenta':'Inicia sesión',m?'Guarda artículos y recibe avisos de tus juegos.':'Accede para guardar tus artículos.')+
  `<div class="chips"><a class="chip" href="#/cuenta" ${m?'':'aria-current="page"'}>Iniciar sesión</a><a class="chip" href="#/cuenta/registro" ${m?'aria-current="page"':''}>Registrarme</a></div>
- <form class="box" id="cf">${m?'<label for="u">Nombre</label><input id="u" required>':''}<label for="e">Correo</label><input id="e" type="email" required><label for="p">Contraseña</label><input id="p" type="password" required>
+ <form class="box" id="cf">${m?'<label for="u">Nombre</label><input id="u" required>':''}<label for="e">Correo</label><input id="e" type="email" required><label for="p">Contraseña</label><input id="p" type="password" required ${m?'minlength="6" autocomplete="new-password"':'autocomplete="current-password"'}>
  <button class="btn p" type="submit">${m?'Crear cuenta':'Entrar'}</button><p class="note" id="cm"></p></form>`;
 const about=()=>head('Acerca de Game News','Noticias, reseñas y guías de videojuegos, escritas con claridad.')+`<div class="art"><p>Cubrimos consolas, PC y esports. Si tienes una pista o quieres colaborar, escríbenos a redaccion@gamenews.example.</p></div>`;
 const nf=()=>head('Página no encontrada','Esta dirección no existe o cambió.')+'<a class="btn p" href="#/">Volver al inicio</a>';
@@ -343,7 +370,7 @@ function route(){closeBuy();
 }
 $('#nav').innerHTML=Object.keys(S).map(k=>`<li><a href="#/${k}" data-k="${k}">${S[k].n}</a><ul class="dd">${S[k].subs.map(x=>`<li><a href="#/${k}/${sl(x)}">${x}</a></li>`).join('')}</ul></li>`).join('');
 $('#trn').innerHTML='<b>Tendencias</b>'+Object.keys(T).map(k=>`<a href="#/tema/${k}" data-k="${k}">${T[k][0]}</a>`).join('')+'<a href="#/ofertas" data-k="ofertas">Ofertas en juegos</a>';
-$('#fn').innerHTML=Object.keys(S).map(k=>`<li><a href="#/${k}">${S[k].n}</a></li>`).join('')+'<li><a href="#/ofertas">Ofertas</a></li><li><a href="#/acerca">Acerca de</a></li>';
+$('#fn').innerHTML=Object.keys(S).map(k=>`<li><a href="#/${k}">${S[k].n}</a></li>`).join('')+'<li><a href="#/ofertas">Ofertas</a></li><li><a href="#/cuenta">Mi cuenta</a></li><li><a href="#/acerca">Acerca de</a></li>';
 $('#sb').onclick=()=>{$('#sf').classList.toggle('on');$('#q').focus()};
 $('#q').onkeydown=e=>{if(e.key=='Enter'&&e.target.value.trim()){location.hash='#/buscar/'+encodeURIComponent(e.target.value.trim());$('#sf').classList.remove('on')}};
 $('#tb').onclick=()=>{const d=document.documentElement,dark=getComputedStyle(d).getPropertyValue('--bg').trim()=='#101216';d.dataset.theme=dark?'light':'dark'};
