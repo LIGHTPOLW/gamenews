@@ -86,8 +86,37 @@ small,.m{color:var(--mu);font-size:13px}
 .md .note{margin-top:12px}
 footer{border-top:1px solid var(--ln);padding:28px 0 40px;color:var(--mu);font-size:14px}
 footer .w{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}footer nav ul{display:flex;gap:16px;flex-wrap:wrap}footer a:hover{color:var(--ink)}
-@media(max-width:820px){.g2,.cols,.og{grid-template-columns:1fr;gap:28px}.top{gap:12px}.dd{display:none!important}
-nav{overflow-x:auto;white-space:nowrap}.tools .btn.p{display:none}}
+.trailer-player{margin:28px 0;padding:18px;border:1px solid var(--ln);border-radius:8px;background:var(--sf)}.trailer-player h2{font-size:22px;margin-bottom:14px}.video-frame{width:100%;aspect-ratio:16/9;background:#000;border-radius:6px;overflow:hidden}.video-frame video{width:100%;height:100%;display:block;object-fit:contain}.trailer-player .m{margin-top:10px}
+@media(max-width:820px){
+ .g2,.cols,.og{grid-template-columns:1fr;gap:28px}
+ .w{padding-left:16px;padding-right:16px}
+ header .top{height:auto;min-height:60px;display:flex;flex-wrap:wrap;gap:8px 10px;padding-top:10px;padding-bottom:10px}
+ .logo{font-size:19px;flex:0 0 auto}
+ header .tools{margin-left:auto;gap:6px;flex:0 0 auto}
+ .ib,.btn{font-size:13px;padding:7px 9px}
+ header .tools .btn.p{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+ header nav{order:3;flex:0 0 100%;width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;white-space:nowrap;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+ header nav>ul{width:max-content;gap:2px}
+ header nav>ul>li>a{padding:8px 10px;font-size:14px}
+ .dd{display:none!important}
+ .tr{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .tr .w{width:max-content;min-width:100%;gap:16px;padding-left:16px;padding-right:16px}
+ main{padding:24px 0 44px;min-height:60vh}
+ .ph{align-items:flex-start}
+ .art p{font-size:17px}
+ footer{padding:24px 0 calc(28px + env(safe-area-inset-bottom,0px))}
+ footer .w{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+ footer nav{display:block;flex:none;width:100%;overflow:visible;white-space:normal;min-width:0}
+ footer nav ul{display:flex;flex-wrap:wrap;gap:8px 14px;width:100%}
+ footer nav li{max-width:100%}
+ footer nav a{display:inline-block;padding:3px 0;overflow-wrap:anywhere}
+}
+@media(max-width:380px){
+ .w{padding-left:12px;padding-right:12px}
+ header .tools{gap:4px}
+ .ib,.btn{padding:7px 7px;font-size:12px}
+ .logo{font-size:18px}
+}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
 </head>
@@ -246,6 +275,14 @@ function section(k,sub){
  return head(id||s.n,id?`${s.n}: ${id}`:s.d)+chips+list(by(a=>a.s==k&&(!id||a.sub==id)),'Aún no publicamos artículos en esta categoría.')}
 function topic(k){const t=T[k];if(!t)return nf();
  return head(t[0],t[1])+list(by(a=>a.t==k))}
+const TRAILERS={
+  20:{title:'Grand Theft Auto VI',file:'sources/gtatrailer.mp4'},
+  21:{title:'Black Myth: Wukong',file:'sources/wugonktrailer.mp4'},
+  22:{title:'Elden Ring: Shadow of the Erdtree',file:'sources/shadowtrailer.mp4'},
+  23:{title:'Marvel’s Spider-Man 2',file:'sources/spider2trailer.mp4'}
+};
+const trailerBox=i=>{const t=TRAILERS[i];if(!t)return '';return `<section class="trailer-player"><h2>Tráiler de ${t.title}</h2><div class="video-frame"><video controls preload="metadata"><source src="${t.file}" type="video/mp4">Tu navegador no puede reproducir este video.</video></div><p class="m">Archivo local: <code>${t.file}</code></p></section>`};
+
 const BODY = {
   0: "La PlayStation 5 Pro llegó como una versión más potente de la PS5 original. Su principal mejora está en la GPU, junto con tecnologías como PlayStation Spectral Super Resolution (PSSR), pensadas para mejorar la calidad de imagen sin sacrificar tanto rendimiento.\n\nSony la orientó a jugadores con televisores 4K y pantallas compatibles con frecuencias altas. Algunos juegos reciben parches específicos para aprovechar mejor el hardware, aunque la PS5 Pro no sustituye a la PS5 normal y muchos títulos siguen funcionando en ambas consolas.\n\nLa decisión de comprarla depende principalmente de tu pantalla y de cuánto valores una imagen más estable en modos de rendimiento y mayor resolución.",
   1: "Nintendo Switch 2 es la sucesora de Nintendo Switch y conserva el concepto de consola híbrida. La consola cuenta con una pantalla LCD de 7.9 pulgadas, resolución de 1080p y soporte para hasta 120 Hz en títulos compatibles.\n\nNintendo también incorporó Joy-Con 2 con conexión magnética y funciones adicionales. La consola admite juegos de Switch mediante compatibilidad con títulos físicos y digitales compatibles, aunque existen excepciones.\n\nEntre sus funciones destaca GameChat, pensado para comunicación durante las partidas, y el modo TV con salida de hasta 4K en juegos compatibles.",
@@ -289,6 +326,7 @@ function art(i){const a=A[i];if(!a)return nf();
   return `<article class="art"><div class="crumb"><a href="#/">Inicio</a> / <a href="#/${a.s}">${S[a.s].n}</a> / <a href="#/${a.s}/${sl(a.sub)}">${a.sub}</a></div>
   <h1>${a.h}</h1><span class="m">${meta(a)}, Redacción Game News</span>${th(a,1)}
   ${body}
+  ${a.s==='traileres'?trailerBox(a.i):''}
   ${a.t?`<p><a class="chip" href="#/tema/${a.t}">Más sobre ${T[a.t][0]}</a></p>`:''}</article>
   <section class="sec"><h2>Relacionadas</h2>${rel.map(row).join('')}</section>`}
 
