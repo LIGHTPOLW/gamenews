@@ -281,7 +281,7 @@ const TRAILERS={
   22:{title:'Elden Ring: Shadow of the Erdtree',file:'sources/shadowtrailer.mp4'},
   23:{title:'Marvel’s Spider-Man 2',file:'sources/spider2trailer.mp4'}
 };
-const trailerBox=i=>{const t=TRAILERS[i];if(!t)return '';return `<section class="trailer-player"><h2>Tráiler de ${t.title}</h2><div class="video-frame"><video controls preload="metadata"><source src="${t.file}" type="video/mp4">Tu navegador no puede reproducir este video.</video></div><p class="m">Archivo local: <code>${t.file}</code></p></section>`};
+const trailerBox=i=>{const t=TRAILERS[i];if(!t)return '';return `<section class="trailer-player"><h2>Tráiler de ${t.title}</h2><div class="video-frame"><video controls preload="metadata"><source src="${t.file}" type="video/mp4">Tu navegador no puede reproducir este video.</video></div></section>`};
 
 const BODY = {
   0: "La PlayStation 5 Pro llegó como una versión más potente de la PS5 original. Su principal mejora está en la GPU, junto con tecnologías como PlayStation Spectral Super Resolution (PSSR), pensadas para mejorar la calidad de imagen sin sacrificar tanto rendimiento.\n\nSony la orientó a jugadores con televisores 4K y pantallas compatibles con frecuencias altas. Algunos juegos reciben parches específicos para aprovechar mejor el hardware, aunque la PS5 Pro no sustituye a la PS5 normal y muchos títulos siguen funcionando en ambas consolas.\n\nLa decisión de comprarla depende principalmente de tu pantalla y de cuánto valores una imagen más estable en modos de rendimiento y mayor resolución.",
